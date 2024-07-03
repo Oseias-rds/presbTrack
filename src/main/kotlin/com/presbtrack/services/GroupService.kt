@@ -28,7 +28,25 @@ class GroupService {
 
     fun addUserToGroup(groupId: Long, user: UserDTO): GroupDTO? {
         val group = groups.find { it.id == groupId }
-        group?.users?.add(user)
-        return group
+        return if (group != null) {
+            group.users.add(user)
+            group
+        } else {
+            null
+        }
+    }
+    fun updateGroup(groupDTO: GroupDTO): GroupDTO? {
+        val existingGroup = groups.find { it.id == groupDTO.id }
+        existingGroup?.let {
+            it.name = groupDTO.name
+            it.users = groupDTO.users
+            return it
+        }
+        return null
+    }
+
+
+    fun deleteGroup(groupId: Long): Boolean {
+        return groups.removeIf { group -> group.id == groupId }
     }
 }

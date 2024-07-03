@@ -13,7 +13,7 @@ class ClassService {
         val classDTO = ClassDTO(
                 id = classes.size.toLong(),
                 name = name,
-                group = group
+                group = group,
         )
         classes.add(classDTO)
         return classDTO
@@ -25,5 +25,30 @@ class ClassService {
 
     fun getClassById(classId: Long?): ClassDTO? {
         return classes.find { classDTO -> classDTO.id == classId }
+    }
+
+    fun addGroupToClass(classId: Long, group: GroupDTO): ClassDTO? {
+        val classDto = classes.find { it.id == classId }
+        return if (classDto != null) {
+            classDto.group = group
+            classDto
+        } else {
+            null
+        }
+    }
+
+    fun updateClass(classDTO: ClassDTO): ClassDTO? {
+        val existingClass = classes.find { it.id == classDTO.id }
+        existingClass?.let {
+            it.name = classDTO.name
+            it.group = classDTO.group
+            return it
+        }
+        return null
+    }
+
+
+    fun deleteClass(classId: Long): Boolean {
+        return classes.removeIf { classes -> classes.id == classId }
     }
 }

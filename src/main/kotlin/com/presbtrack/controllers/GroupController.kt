@@ -1,6 +1,7 @@
 package com.presbtrack.controllers
 
 import com.presbtrack.controllers.projectDTO.GroupDTO
+import com.presbtrack.controllers.projectDTO.UserDTO
 import com.presbtrack.services.GroupService
 import com.presbtrack.services.UserService
 import org.springframework.web.bind.annotation.*
@@ -24,13 +25,16 @@ class GroupController(private val groupService: GroupService) {
         return groupService.getGroupById(groupId)
     }
 
-    @PostMapping("/addUser")
-    fun addUserToGroup(
-            @RequestParam("groupId") groupId: Long,
-            @RequestParam("userId") userId: Long
-    ): GroupDTO? {
-        val userService: UserService = UserService()
-        val user = userService.getUserById(userId)
-        return user?.let { groupService.addUserToGroup(groupId, it) }
+    @PostMapping("/{groupId}/addUser")
+    fun addUserToGroup(@PathVariable groupId: Long, @RequestBody user: UserDTO): GroupDTO? {
+        return groupService.addUserToGroup(groupId, user)
+    }
+
+    fun updateGroup(@RequestParam("group") group: GroupDTO): GroupDTO? {
+        return groupService.updateGroup(group)
+    }
+
+    fun deleteGroup(@RequestParam("id") groupId: Long): Boolean {
+        return groupService.deleteGroup(groupId)
     }
 }

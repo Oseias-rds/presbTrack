@@ -1,6 +1,5 @@
 package com.presbtrack.controllers
 
-import User
 import com.presbtrack.controllers.projectDTO.UserDTO
 import com.presbtrack.models.enums.Role
 import com.presbtrack.services.UserService

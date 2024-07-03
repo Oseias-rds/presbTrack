@@ -30,14 +30,18 @@ class UserService {
     }
 
     fun updateUser(user: UserDTO): UserDTO? {
-        val existingUserIndex = users.indexOfFirst { it.id == user.id }
-        return if (existingUserIndex != -1) {
-            users[existingUserIndex] = user
-            user
-        } else {
-            null
+        val existingUser = users.find { it.id == user.id }
+        existingUser?.let {
+            it.name = user.name
+            it.bornDate = user.bornDate
+            it.cpf = user.cpf
+            it.phoneNumber = user.phoneNumber
+            it.role = user.role
+            return it
         }
+        return null
     }
+
 
     fun deleteUser(userId: Long): Boolean {
         return users.removeIf { user -> user.id == userId }

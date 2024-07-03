@@ -4,7 +4,7 @@ import com.presbtrack.models.enums.Role
 import javax.persistence.Id
 
 data class UserDTO(
-        @Id var id: Long,
+        @Id val id: Long,
         var name: String,
         var bornDate: String,
         var cpf: String,
